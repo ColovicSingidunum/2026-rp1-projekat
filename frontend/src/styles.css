@@ -1,0 +1,112 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background: #f4f4f4;
+	color: #222;
+	margin: 0;
+}
+
+.app {
+	max-width: 900px;
+	margin: 20px auto;
+	padding: 0 16px;
+}
+
+h1 {
+	font-size: 24px;
+}
+
+h2 {
+	font-size: 18px;
+	margin-top: 24px;
+}
+
+nav {
+	margin-bottom: 16px;
+}
+
+nav button {
+	background: #e8e8e8;
+	border: 1px solid #bbb;
+	padding: 6px 12px;
+	margin-right: 4px;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+nav button.active {
+	background: #fff;
+	font-weight: bold;
+}
+
+.row {
+	margin-bottom: 16px;
+}
+
+input,
+select {
+	border: 1px solid #999;
+	padding: 5px 7px;
+	margin-right: 6px;
+	margin-bottom: 6px;
+	font-size: 14px;
+}
+
+button[type='submit'] {
+	border: 1px solid #999;
+	background: #ddd;
+	padding: 5px 12px;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+button.link {
+	background: none;
+	border: none;
+	color: #0645ad;
+	cursor: pointer;
+	text-decoration: underline;
+	font-size: 14px;
+	padding: 0;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	background: #fff;
+	margin-top: 8px;
+}
+
+th,
+td {
+	text-align: left;
+	padding: 6px 8px;
+	border: 1px solid #ccc;
+	font-size: 14px;
+}
+
+th {
+	background: #eee;
+}
+
+.badge.available {
+	color: #157f1f;
+}
+
+.badge.rented {
+	color: #b06a00;
+}
+
+.error {
+	background: #ffecec;
+	border: 1px solid #d33;
+	color: #a00;
+	padding: 8px 10px;
+	margin-bottom: 16px;
+	cursor: pointer;
+}
+
+footer {
+	margin-top: 32px;
+	color: #777;
+	font-size: 12px;
+}
