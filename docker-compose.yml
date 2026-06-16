@@ -1,0 +1,72 @@
+# 4 servisa: proxy, frontend, backend, db
+
+services:
+    # reverse proxy, jedini izlozen ka hostu (80/443)
+    proxy:
+        build: ./proxy
+        ports:
+            - '80:80'
+            - '443:443'
+        networks:
+            - public
+            - internal
+        depends_on:
+            - frontend
+            - backend
+        restart: unless-stopped
+
+    # frontend, React build serviran preko nginxa
+    frontend:
+        build: ./frontend
+        networks:
+            - internal
+        depends_on:
+            - backend
+        restart: unless-stopped
+
+    # backend, Express API. ceka da baza bude healthy pre starta
+    backend:
+        build: ./backend
+        environment:
+            PORT: '3000'
+            PGHOST: db
+            PGPORT: '5432'
+            PGUSER: ${POSTGRES_USER:-storage}
+            PGPASSWORD: ${POSTGRES_PASSWORD:-storage_pass}
+            PGDATABASE: ${POSTGRES_DB:-selfstorage}
+        networks:
+            - internal
+        depends_on:
+            db:
+                condition: service_healthy
+        restart: unless-stopped
+
+    # baza, nema portova ka hostu (samo internal mreza)
+    db:
+        image: postgres:16-alpine
+        environment:
+            POSTGRES_USER: ${POSTGRES_USER:-storage}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-storage_pass}
+            POSTGRES_DB: ${POSTGRES_DB:-selfstorage}
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+        networks:
+            - internal
+        healthcheck:
+            test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-storage} -d ${POSTGRES_DB:-selfstorage}']
+            interval: 5s
+            timeout: 5s
+            retries: 10
+        restart: unless-stopped
+
+networks:
+    # spoljna mreza, samo proxy
+    public:
+        driver: bridge
+    # interna mreza za komunikaciju izmedju servisa
+    internal:
+        driver: bridge
+        internal: true
+
+volumes:
+    pgdata:
