@@ -80,3 +80,7 @@ Nakon ovoga je potreban restart browser-a.
     ```bash
     docker compose down -v
     ```
+
+## Licenca
+
+[GNU GPL v3.0](LICENSE)
